@@ -25,12 +25,12 @@ if ($musics->have_posts()): ?>
                 $custom = get_post_custom($post->ID);
                 ?>
                 <?php the_title(); ?>
-                <p>Composer Name: <?php echo $custom["composer_name"][0] ?></p>
-                <p>Publisher: <?php echo $custom["publisher"][0] ?></p>
-                <p>Year: <?php echo $custom["year_recording"][0] ?></p>
-                <p>Additional Contributors: <?php echo $custom["contributors"][0] ?></p>
-                <p>URL: <a href="<?php echo $custom["url"][0] ?>">Listen </a></>
-                <p>Price: <?php echo $custom["price"][0] ?></p>
+                <p><?php _e('Composer Name:', $this->plugin_name); ?> <?php echo $custom["composer_name"][0] ?></p>
+                <p><?php _e('Publisher:', $this->plugin_name); ?>: <?php echo $custom["publisher"][0] ?></p>
+                <p><?php _e('Year:', $this->plugin_name); ?>: <?php echo $custom["year_recording"][0] ?></p>
+                <p><?php _e('Additional Contributors:', $this->plugin_name); ?>: <?php echo $custom["contributors"][0] ?></p>
+                <p><?php _e('URL:', $this->plugin_name); ?>: <a href="<?php echo $custom["url"][0] ?>">Listen </a></>
+                <p><?php _e('Price:', $this->plugin_name); ?>: <?php echo $custom["price"][0] ?></p>
             </div>
         <?php
         endwhile;

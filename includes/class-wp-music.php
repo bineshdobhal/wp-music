@@ -122,6 +122,12 @@ class Wp_Music {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wp-music-public.php';
 
+
+        /**
+         * Custom Post Types
+         */
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wp-music-post_types.php';
+
 		$this->loader = new Wp_Music_Loader();
 
 	}
@@ -157,6 +163,28 @@ class Wp_Music {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
+
+        /**
+         * meta box
+         */
+        $this->loader->add_action( 'admin_init', $plugin_admin, 'rerender_meta_options' );
+        $this->loader->add_action( 'save_post', $plugin_admin, 'save_meta_options' );
+
+        /**
+         * admin menu
+         */
+        $this->loader->add_action( 'admin_menu', $plugin_admin, 'create_menu', 0 );
+        /**
+         * save options
+         */
+        $this->loader->add_action( 'admin_init', $plugin_admin, 'options_update' );
+
+        /**
+         * create posts types and taxonomy
+         */
+        $plugin_post_types = new Wp_Music_Post_Types();
+        $this->loader->add_action( 'init', $plugin_post_types, 'create_custom_post_type', 999 );
+
 	}
 
 	/**
@@ -173,6 +201,7 @@ class Wp_Music {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
+        $this->loader->add_shortcode( "music", $plugin_public, "music", $priority = 10, $accepted_args = 2 );
 	}
 
 	/**
